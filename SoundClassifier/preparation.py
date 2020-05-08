@@ -1,22 +1,27 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 # BEGIN SC_python1
 import os
 import shutil
 import pandas as pd
 
+import os.path as path
+
 # BEGIN SC_python_inner
 # Configure as required
-input_classes_filename = '/Users/paris/Downloads/ESC-50-master/meta/esc50.csv'
-sounds_directory = '/Users/paris/Downloads/ESC-50-master/audio/'
-output_directory = '/Users/paris/Downloads/ESC-50-master/classes/'
+
+esc_path = '/Users/desplesda/Work/third-party/ESC-50/'
+
+input_classes_filename = path.join(esc_path, 'meta/esc50.csv')
+sounds_directory = path.join(esc_path, 'audio/')
+output_directory = path.join(esc_path, 'classes/')
 classes_to_include =  [
     'dog', 'rooster', 'pig', 'cow', 'frog', 'cat', 'hen', 
     'insects', 'sheep', 'crow'
 ]
 
 # whether to use whole ESC-50 dataset or lesser-restricted ESC-10 subset
-include_unlicensed = False 
+include_unlicensed = True 
 # END SC_python_inner
 
 # Make output directory
@@ -52,8 +57,10 @@ for line in classes_file.itertuples(index = False):
             file_src = sounds_directory + file_name
             file_dst = output_directory + file_class + '/' + file_name
             try:
+                print("{} -> {}".format(file_src, file_dst))
                 shutil.copy2(file_src, file_dst)
-            except IOError:
+            except IOError as e:
+                print("Error: {}".format(e))
                 raise
 # END SC_python1
 
