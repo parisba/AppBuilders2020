@@ -56,7 +56,7 @@
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>We use the microphone to record audio in order to determine what kind of animal made the sound.</string>
+	<string>We use the microphone to classify animal sounds.</string>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

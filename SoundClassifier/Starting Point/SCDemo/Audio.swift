@@ -6,17 +6,10 @@
 //  Copyright © 2019 Mars Geldard. All rights reserved.
 //
 
-import CoreML
-import AVFoundation
-import SoundAnalysis
 
-class ResultsObserver {
-    
-    // TODO: implement initialisation and completion handlers
-}
+// 1. Import modules
 
-class AudioClassifier {
-    
-    // TODO: implement object able to tap input audio stream and
-    // classify it as per the model we have trained
-}
+// 2. Define AudioClassifier
+
+// 3. Define ResultsObserver
+

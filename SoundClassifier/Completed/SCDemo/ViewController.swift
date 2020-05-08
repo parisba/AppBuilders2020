@@ -8,9 +8,6 @@
 
 import UIKit
 import AVFoundation
-// BEGIN SC_complete_imports
-import SoundAnalysis
-// END SC_complete_imports
 
 class ThreeStateButton: UIButton {
     
@@ -129,7 +126,7 @@ class ViewController: UIViewController {
     
     // BEGIN SC_complete_classifySound_call
     private func classifySound(file: URL) {
-        classifier?.classify(audioFile: file) { result in
+        classifier.classify(audioFile: file) { result in
             self.classify(Animal(rawValue: result ?? ""))
         }
     }
@@ -156,6 +153,7 @@ extension ViewController {
 }
 
 extension ViewController: AVAudioRecorderDelegate {
+    
     func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
         finishRecording(success: flag)
     }
@@ -167,10 +165,17 @@ extension ViewController: AVAudioRecorderDelegate {
             AVNumberOfChannelsKey: 1,
             AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
         ]
+        do {
+            // Neccessary for recording to work on the device
+            try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playAndRecord)
+            
+            let recorder = try AVAudioRecorder(url: recordedAudioFilename, settings: settings)
+            recorder.delegate = self
+            return recorder
+        } catch let error {
+            fatalError("Failed to create audio recorder: \(error.localizedDescription)")
+        }
         
-        let recorder = try? AVAudioRecorder(url: recordedAudioFilename, settings: settings)
-        recorder?.delegate = self
-        return recorder
     }
 }
 
