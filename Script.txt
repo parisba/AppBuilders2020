@@ -1,0 +1,218 @@
+AppBuilders Talk
+
+INTRO
+
+(intro to speaker goes here. max 150 words)
+
+TASK-BASED MACHINE LEARNING
+
+Machine learning has a reputation for being quite impenetrable and a little bit scary at times. It's full of fancy words like activation function tensor generative adversarial networks mini batches stochastic gradient descent and many more and now it also has a reputation to be in very mathematics heavy it can be quite imposing and quite impressive to be working in machine learning and intensive. This can drive people away.
+
+But it doesn't really need to be! The vast majority of really amazing machine learning power features can be built without you having to understand too much about what's going on under the hood. You don't need to have a deep understanding of the underlying technology, as long as you know the goals - that is, what you’re trying to accomplish. This is an approach called task based artificial intelligence.
+
+There are certain tasks for machine learning is really quite good at. For example, image recognition, recommendations, sound classification, dictation, and other tasks that until reasonably recently were considered to be things that only human beings and their organic brains could do. These task and now achievable on small-scale devices like mobile phones through the application of technologies like deep convolutional neural networks and other words that give people who are scared of maths the heebie-jeebies. But again: we don't care about how the results are achieved, only that the results are achieved in the end.
+
+The idea behind task based artificial intelligence is you build systems on top of existing much more detailed and much more technical machine learning infrastructure that is designed to support very specific practical tasks. You don't actually care how the system performs image classification for example you just care that you can feed and images and it can give you results. 
+
+Knowing more information about how the machine learning system is forming this classification and generating results is absolutely useful but you don't need to know about it until the time comes for tuning and improving the accuracy and efficiency of your system. Until you are the point where that becomes important you do not need to care about the underlying implementation.
+
+The machine learning technologies and frameworks that come with Xcode support this style of building machine learning into applications. While all of the underlying stuff is still exposed and you can make use of it, the tools also provide you with applications and frameworks to make it straightforward and simple to build machine learning models that can be applied to common tasks.
+
+We only have a short amount of time together today, so we're going to take a look at two different kinds of machine learning features: big features, and small features.
+
+First let's look at big features. These are the kinds of features where you build your entire application around the thing for example if you had a feature of your app that can tell you is a photo contains a fruit and if so what kind of fruit. 
+
+Or you want to make an application to identify music. for example Shazam the music detection and classifying application that Apple purchased, can record audio and then identify the song that's being played in that audio. The entire application exists to present this feature to the user.
+
+The other kind of feature is a small feature. Small features are where you use machine techniques to improve a facet of the application that you're building. 
+
+For example, the built-in spellchecker and auto correction tool is able to identify domain specific terms such as iPad iPhone AirPods Apple Watch. Another example of a small feature is the face recognition system built into the Photos application on your Mac, iPhone, and iPad. The cool functionality of the photos app is to manage the content of your photo library, but it also has machine learning built in to identify the faces of the people in the photo. This improves the overall experience of the photos app, but the entire application is not built around this specific feature.
+
+TOOLS
+
+Today we going to look at both a big feature and a small feature. We're going to build an entire application built around a single task using machine learning, and we're going to add machine learning to improve a larger application. As part of this, you will learn how to use the existing machine learning developing tools that are already on your computer, and how you can get started with them today.
+
+We are going to be using some common tools that are built in, and we're going to also download and install a couple of things that are not built-in. First we are going to use Xcode, the standard tool for building software the Apple platforms, we're going to use Create ML to train verify and export our model, and we're going to use Python to do some datasets preparation.
+
+Xcode and Python are fairly commonly-known developer tools, so I'm not going to explain them in detail, but if you're not familiar with them then there's a lot of great resources available on Apple’s developer site, and the recordings of the talks at Apple developer conference.
+
+Create ML is something that you might be a bit less familiar with. Create ML is an app that simplifies the creation of machine learning models are used for common machine learning tasks. 
+
+You can create models that perform image recognition, text classification, as well as more generic tasks like item recommendation, and more. You simply choose what kind of machine learning task you'd like to perform, you feed it training data, and generate a model. It performs validation and testing of the model as well, and it's really good at the tasks that we have in mind today! It comes built-in with Xcode, and requires macOS 10.15 Catalina.
+
+BIG FEATURES: A SOUND CLASSIFIER
+
+The first thing that we're going to do is build a application that can classify sounds. It will be able to listen to the outside world, and identify what type of animal can be heard in that audio. Once it's determined what kind of animal we are listening to, it will then show an icon on the screen.
+
+There are a few things we have to do in order to build this application. First, we need to decide what kind of task we’re performing, and see if the existing tools that we are working with can handle this kind of task. Next we need to acquire a dataset that we can use to train the machine learning model. We’ll then need to prepare the data for training, train the model, and then build an application that can feed data into the model and get back results.
+
+This specific kind of task we’re trying to do is a sound classification task. Given a chunk of recorded audio, we want to feed that audio into a pacifier, and get back a set of results. Each of these results will be the type of sound that we have identified, and how confident we are in applying that label to the recording. 
+
+To build a model, we need to decide on what possible labels we want to apply. For this application, we care about animals. We'll decide on a list of animals that we want to train the model to recognise. One side effect of this is that if we have audio of any other kind of animal, we won't be able to recognise correctly. In fact, it will mislabel the recording as one of the animal types we specified. There are ways to work around this, but we’ll accept the limitation in this demo.
+
+The model will only recognise sounds that it was previously trained on. This means that whatever kind of data we give it during training will form the list of possible labels that we can apply to incoming audio. 
+
+This is why it's very important to have a large and diverse training dataset, and it's also the reason why large companies like Google spend a great deal of effort and money collecting human verified data. If you've ever completed a CAPTCHA hosted by Google, you've provided them with some human verified labelling information for data. 
+
+This is why those kinds of tests generally include tasks like identifying street signs or vehicles: it's for training object classification and object recognition in machine learning models.
+
+We don't have time to put together our own training data set today, because it's a fairly large task. Fortunately, there are datasets out there that we can make use of. One of these is ESC–50. This is a labelled collection of 2000 environmental audio recordings taken from the freesound project. The recordings are of things like animals natural sounds human noises and more.
+
+To get started, we’ll download the dataset from GitHub. It's about 850 MB. Once you’ve downloaded it, unzip it somewhere. We won’t be using all of the data, just the animal noises.
+
+The full dataset is licensed under the creative Commons attribution non-commercial license, which means you can't use it for commercial use. They do have a smaller 10 label dataset that is licensed as Creative Commons Attribution, if you want to use the dataset commercially.
+
+Now that we’ve downloaded the dataset, we need to prepare the data for Create ML to work with it. Create ML expects the files to be sorted into folders, and each folder becomes the label for those files. For example, all of the recordings of dogs need to be in a folder named ‘dogs’, all of the cats in a folder named ‘cats’, and so on. 
+
+As downloaded, the files are all in a single folder called “audio". We need to move the files into a folder based on their type. To do that, we’ll run a small Python script that reads the label information that's stored in a CSV file, and move the files into the right folders. The script doesn't do any machine learning, it's just reading a spreadsheet file and moving files around. We'll get to the machine learning in a second.
+
+I'll run the script now.
+
+<RUN SCRIPT>
+
+Each of the animal noise recordings have now been placed in a folder that matches their label.
+
+<OPEN CAT FOLDER>
+
+For example, if I open the ‘cat’ folder, all of the files are recordings of cat noises.
+
+Now that we've prepared our data for training, we're ready to create the model using Create ML. 
+
+Open Create ML by opening the Xcode menu, choosing Open Developer Tool, and choosing Create ML.
+
+<OPEN CREATE ML>
+
+Click New Document and then choose Sound Classifier from the list of templates.
+
+<CLICK NEW DOCUMENT>
+
+<CHOOSE SOUND CLASSIFIER>
+
+Click next, and save the project somewhere. 
+
+<SAVE PROJECT> 
+
+Next select the model source from the list on the left-hand side of the window. Open the drop-down menu in Training Data, and select Select Files.
+
+<SELECT MODEL>
+
+<SELECT TRAINING DATA>
+
+Locate the classes folder that the script generated a moment ago.
+
+<SELECT FILES>
+
+Click Open.
+
+<CLICK OPEN>
+
+Create ML will split these files into a training set and a validation set. We can provide our own validation set if we want to, or we can leave it set to “automatic"; in this mode, Create ML will divide the training data into the two sets randomly.
+
+Create ML will detect that you have 10 labels, and a total of 400 items. We’re now ready to train.
+
+Click the train button, and watch as Create ML trains the model. 
+
+<CLICK TRAIN>
+
+It will first start extracting features from the audio, and then it will begin multiple iterations of training. For a small dataset like this, it won't take very long to train. On my machine, it takes about two minutes to finish.
+
+Once it’s done training, you can take a look at how well the finished model performs. Create ML will show what percentage of the training and validation data the model was able to correctly recognise. 
+
+We can also run tests on the model by providing it with additional labelled sounds that the model has never seen before.
+
+The model is now ready to use. Let’s drag the file into a folder.
+
+<DRAG FILE INTO FOLDER>
+
+THE BASE APPLICATION
+
+Before we start working with the trained model, let’s look at the base application that we’re going to put the model in.
+
+The app has a collection of icons, one for each of the ten types of animal that we can recognise. When we tap the Record button at the bottom of the screen, it will record a few seconds of audio, and save it to a file.
+
+The part that’s missing is the classification. We want to give the recorded sound file to the model, and get back which type of animal it’s decided to label it as. Once we have that, we’ll highlight the corresponding animal icon.
+
+USING MODELS
+
+The first thing we need to do is add the trained model to the app. I’ll do this now, by dragging and dropping it from the folder I put it in.
+
+<DRAG MODEL INTO PROJECT>
+
+A CoreML model is just a data file. In order to use it in our app, we need code that can open the file, and work with it. Fortunately, Xcode can generate it for us.
+
+<OPEN GENERATED SOURCE CODE>
+
+The generated model class allows us to feed inputs in, and get outputs back. We won’t be using it directly, because we’ll be using sound classifier classes that make it easier to take audio data and get back results. 
+
+That said, it’s worth looking at the code that Xcode generates, because it’s useful to understand how the model works with the rest of your code.
+
+When we open the model in Xcode, the Model Class section gives us a link to the generated source code for a class that can work with the model. So, that was easy.
+
+Sound isn’t an instantaneous thing. It’s something that happens over time. If you’re analysing live audio, there’s never a moment that the analysis has “finished” and generated a single result. 
+
+Because of this, the sound classification libraries that come with Core ML will actually generate multiple results over time, when you give it audio data. 
+
+We now need to think about how we provide audio data to the model. CoreML models work based on requests: when you want to give data to the model, you create a request, and submit it. After the model has been run, you get back results. 
+
+Each result contains two important values: the label that the model wants to apply to the data, and how confident the model is. 
+
+To get results, we’ll create an SNAudioFileAnalyzer. This is a class that takes a file, and notifies another object about the results that it’s seen. This other object is called the observer, and it receives the requests as they come in. It’s also notified when the analysis is complete. The observer conforms to the protocol SNResultsObserving.
+
+When a result arrives, the method “request didProduce result” is called. Each time we receive a result, we’ll keep it, if it has a reasonably high degree of confidence. When all of the audio data has been analysed, we’ll look at the accumulated results, and let the application know which result we’re most confident about. This will then be used to indicate which animal icon to light up.
+
+Let’s get started adding the audio analysis features to this app. I’ve created an empty file called Audio.swift, where I’ll put all of my analysis code, so that I don’t need to touch the view controller code very much.
+
+<OPEN Audio.swift>
+
+I’ll start by importing the CoreML, AVFoundation and SoundAnalysis modules, which contain the classes I need.
+
+<CODE: 1. Import modules>
+
+Next, I’ll create a new class, called AudioClassifier, which manages the ML model and the sound classification code. It will instantiate the model class, as well as a sound classification request that uses the model. 
+
+<CODE: 2. Define AudioClassifier>
+
+Notice that the classification request has a ‘try’ - that’s because initialising it might fail if we used a model that wasn’t designed for audio.
+
+We also need to create the results observer class, which will receive information from the model, and store the results.
+
+<CODE: 3. Define ResultsObserver>
+
+We have some important methods to add. First up, we’ll write the “request did produce result” method, which will be called every time the analyser produces a classification result. It will take the result, check to see if it’s confident enough, and if it is, store it in the results array.
+
+<CODE: 4. request did produce result>
+
+Next, we’ll write the “request did fail with error” method. As you might guess from the name, it’s called when the analyser fails. When this happens, we’ll return a nil result to the rest of the application.
+
+<CODE: 5. request failed>
+
+Finally, we’ll add the “request did complete” method, which is called when we’re all done with the analysis. In this method, we’ll select the label that we have the highest confidence in, and return that to the application.
+
+<CODE: 6. request did complete>
+
+Now that we’ve written the request observer class, we can use it. We’ll go back to the AudioClassifier class, and add some code that creates an audio file analyser, and gives it an audio file to recognise, as well as a request observer to notify when it gets results. We’ll create the analyser, add the request, and then tell it to analyse.
+
+<CODE: 7. Perform analysis>
+
+That’s all of the machine learning code we need to do! Now, we just need to attach it to the user interface. We’ll go back to ViewController.swift.
+
+<OPEN ViewController.swift>
+
+We don’t have much to do here. First, we’ll create an instance of the AudioClassifier, as a property.
+
+<CODE: 8. Add classifier object>
+
+Finally, in the classifySound method, which is called when the recording completes and receives the URL to the audio file, we’ll take the string that we received, convert it to an animal, and let the view controller know. We’re done!
+
+<BUILD AND RUN THE APP>
+
+We can now test it! I’ve got some recordings of animal noises here. Let’s see how they work.
+
+<TECH: ENSURE PHONE SCREEN IS BEING RECORDED>
+
+<PLAY ANIMAL NOISES, DEMONSTRATE APP>
+
+And there we have it! Our animal noise detector app!
+
+SMALL FEATURES: AUTOMATIC CAPTION GENERATION
+
