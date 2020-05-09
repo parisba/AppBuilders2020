@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="72M-TA-vz1">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="Vxb-0U-RzZ">
+            <objects>
+                <navigationController id="72M-TA-vz1" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Evz-ec-wI1">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" systemColor="systemPinkColor" red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="zdy-hn-wKc"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="yky-Up-b8n" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1363" y="156"/>
+        </scene>
+        <!--Birder-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="PostChirpViewController" customModule="Birder" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="f06-Zb-U4b">
+                                <rect key="frame" x="0.0" y="813" width="414" height="49"/>
+                                <items>
+                                    <barButtonItem systemItem="camera" id="wDM-ZZ-cal">
+                                        <color key="tintColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <connections>
+                                            <action selector="takePicture" destination="BYZ-38-t0r" id="1bm-ze-BEg"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="YqE-gP-kss"/>
+                                </items>
+                                <color key="barTintColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </toolbar>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" keyboardDismissMode="onDrag" translatesAutoresizingMaskIntoConstraints="NO" id="JUb-9b-tjx">
+                                <rect key="frame" x="8" y="88" width="398" height="725"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="bu7-TT-j5w">
+                                        <rect key="frame" x="8" y="8" width="382" height="427.5"/>
+                                        <subviews>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" keyboardDismissMode="onDrag" text="My amazing chirp!" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="nWS-Sy-5Wt">
+                                                <rect key="frame" x="0.0" y="0.0" width="382" height="51"/>
+                                                <color key="textColor" red="0.094117647058823528" green="0.3411764705882353" blue="0.15686274509803921" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="29"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                            </textView>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="wyv-vO-Jtf">
+                                                <rect key="frame" x="0.0" y="59" width="382" height="33"/>
+                                                <color key="textColor" red="0.094117647058823528" green="0.3411764705882353" blue="0.15686274509803921" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                            </textView>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ikj-rf-AXs">
+                                                <rect key="frame" x="0.0" y="100" width="382" height="327.5"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" secondItem="ikj-rf-AXs" secondAttribute="height" multiplier="7:6" id="t8m-uB-2kq"/>
+                                                </constraints>
+                                            </imageView>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="bu7-TT-j5w" firstAttribute="bottom" secondItem="iwc-Uz-mch" secondAttribute="bottom" id="E40-h8-U8h"/>
+                                    <constraint firstItem="bu7-TT-j5w" firstAttribute="top" secondItem="iwc-Uz-mch" secondAttribute="top" constant="8" id="I7k-Tv-mML"/>
+                                    <constraint firstItem="ikj-rf-AXs" firstAttribute="width" secondItem="JUb-9b-tjx" secondAttribute="width" constant="-16" id="IPG-oP-hqU"/>
+                                    <constraint firstItem="bu7-TT-j5w" firstAttribute="leading" secondItem="iwc-Uz-mch" secondAttribute="leading" constant="8" id="f3b-kd-ayd"/>
+                                    <constraint firstItem="bu7-TT-j5w" firstAttribute="trailing" secondItem="iwc-Uz-mch" secondAttribute="trailing" constant="-8" id="wfb-pa-KxC"/>
+                                </constraints>
+                                <viewLayoutGuide key="contentLayoutGuide" id="iwc-Uz-mch"/>
+                                <viewLayoutGuide key="frameLayoutGuide" id="aH6-vO-Hvw"/>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.8766509428269339" green="1" blue="0.90769798442147664" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="JUb-9b-tjx" firstAttribute="trailing" secondItem="Gj5-Ut-Web" secondAttribute="trailing" constant="-8" id="8CZ-OF-Xjc"/>
+                            <constraint firstItem="Gj5-Ut-Web" firstAttribute="top" secondItem="JUb-9b-tjx" secondAttribute="topMargin" constant="-8" id="957-20-Fm1"/>
+                            <constraint firstItem="Gj5-Ut-Web" firstAttribute="trailing" secondItem="f06-Zb-U4b" secondAttribute="trailing" id="Lab-8C-RO5"/>
+                            <constraint firstItem="Gj5-Ut-Web" firstAttribute="bottom" secondItem="f06-Zb-U4b" secondAttribute="bottom" id="Ywo-km-YFh"/>
+                            <constraint firstItem="f06-Zb-U4b" firstAttribute="top" secondItem="JUb-9b-tjx" secondAttribute="bottom" id="eGi-TJ-mJM"/>
+                            <constraint firstItem="Gj5-Ut-Web" firstAttribute="leading" secondItem="JUb-9b-tjx" secondAttribute="leading" constant="-8" id="sz3-Kl-v2H"/>
+                            <constraint firstItem="f06-Zb-U4b" firstAttribute="leading" secondItem="Gj5-Ut-Web" secondAttribute="leading" id="ukH-Cv-zig"/>
+                            <constraint firstItem="f06-Zb-U4b" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="ump-Zr-EQm"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Gj5-Ut-Web"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Birder" id="syZ-Ee-tzq">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="nv2-8x-Yse">
+                            <color key="tintColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Send" style="done" id="J2w-Y6-WBn">
+                            <color key="tintColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="cameraButton" destination="wDM-ZZ-cal" id="dfL-T0-Rh1"/>
+                        <outlet property="imageCaptionTextView" destination="wyv-vO-Jtf" id="wOo-7X-0nV"/>
+                        <outlet property="imageView" destination="ikj-rf-AXs" id="MjC-cW-qE8"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-517.39130434782612" y="162.72321428571428"/>
+        </scene>
+    </scenes>
+</document>

@@ -2,11 +2,11 @@ AppBuilders Talk
 
 INTRO
 
-(intro to speaker goes here. max 150 words)
+Hi! I’m Paris Buttfield-Addison, and I’m an iOS developer and game designer at Secret Lab. I’ve written a bunch of books for O’Reilly Media, and most recently released Practical Artificial Intelligence with Swift.
 
 TASK-BASED MACHINE LEARNING
 
-Machine learning has a reputation for being quite impenetrable and a little bit scary at times. It's full of fancy words like activation function tensor generative adversarial networks mini batches stochastic gradient descent and many more and now it also has a reputation to be in very mathematics heavy it can be quite imposing and quite impressive to be working in machine learning and intensive. This can drive people away.
+Machine learning has a reputation for being quite impenetrable, and a little bit scary at times. It's full of fancy words like activation function tensor generative adversarial networks mini batches stochastic gradient descent and many more and now it also has a reputation to be in very mathematics heavy it can be quite imposing and quite impressive to be working in machine learning and intensive. This can drive people away.
 
 But it doesn't really need to be! The vast majority of really amazing machine learning power features can be built without you having to understand too much about what's going on under the hood. You don't need to have a deep understanding of the underlying technology, as long as you know the goals - that is, what you’re trying to accomplish. This is an approach called task based artificial intelligence.
 
@@ -40,7 +40,7 @@ Create ML is something that you might be a bit less familiar with. Create ML is 
 
 You can create models that perform image recognition, text classification, as well as more generic tasks like item recommendation, and more. You simply choose what kind of machine learning task you'd like to perform, you feed it training data, and generate a model. It performs validation and testing of the model as well, and it's really good at the tasks that we have in mind today! It comes built-in with Xcode, and requires macOS 10.15 Catalina.
 
-BIG FEATURES: A SOUND CLASSIFIER
+A SOUND CLASSIFIER
 
 The first thing that we're going to do is build a application that can classify sounds. It will be able to listen to the outside world, and identify what type of animal can be heard in that audio. Once it's determined what kind of animal we are listening to, it will then show an icon on the screen.
 
@@ -48,7 +48,7 @@ There are a few things we have to do in order to build this application. First, 
 
 This specific kind of task we’re trying to do is a sound classification task. Given a chunk of recorded audio, we want to feed that audio into a pacifier, and get back a set of results. Each of these results will be the type of sound that we have identified, and how confident we are in applying that label to the recording. 
 
-To build a model, we need to decide on what possible labels we want to apply. For this application, we care about animals. We'll decide on a list of animals that we want to train the model to recognise. One side effect of this is that if we have audio of any other kind of animal, we won't be able to recognise correctly. In fact, it will mislabel the recording as one of the animal types we specified. There are ways to work around this, but we’ll accept the limitation in this demo.
+ To build a model, we need to decide on what possible labels we want to apply. For this application, we care about animals. We'll decide on a list of animals that we want to train the model to recognise. One side effect of this is that if we have audio of any other kind of animal, we won't be able to recognise correctly. In fact, it will mislabel the recording as one of the animal types we specified. There are ways to work around this, but we’ll accept the limitation in this demo.
 
 The model will only recognise sounds that it was previously trained on. This means that whatever kind of data we give it during training will form the list of possible labels that we can apply to incoming audio. 
 
@@ -56,29 +56,21 @@ This is why it's very important to have a large and diverse training dataset, an
 
 This is why those kinds of tests generally include tasks like identifying street signs or vehicles: it's for training object classification and object recognition in machine learning models.
 
-We don't have time to put together our own training data set today, because it's a fairly large task. Fortunately, there are datasets out there that we can make use of. One of these is ESC–50. This is a labelled collection of 2000 environmental audio recordings taken from the freesound project. The recordings are of things like animals natural sounds human noises and more.
+We don't have time to put together our own training data set today, because it's a fairly large task. Fortunately, there are datasets out there that we can make use of. One of these is ESC–50. This is a labelled collection of 2,000 environmental audio recordings taken from the FreeSound project. The recordings are of things like animals natural sounds human noises and more.
 
 To get started, we’ll download the dataset from GitHub. It's about 850 MB. Once you’ve downloaded it, unzip it somewhere. We won’t be using all of the data, just the animal noises.
 
-The full dataset is licensed under the creative Commons attribution non-commercial license, which means you can't use it for commercial use. They do have a smaller 10 label dataset that is licensed as Creative Commons Attribution, if you want to use the dataset commercially.
+The full dataset is licensed under the creative Commons attribution non-commercial license, which means you can't use it for commercial use. They do have a smaller 10 label dataset that is licensed as Creative Commons Attribution.
 
 Now that we’ve downloaded the dataset, we need to prepare the data for Create ML to work with it. Create ML expects the files to be sorted into folders, and each folder becomes the label for those files. For example, all of the recordings of dogs need to be in a folder named ‘dogs’, all of the cats in a folder named ‘cats’, and so on. 
 
-As downloaded, the files are all in a single folder called “audio". We need to move the files into a folder based on their type. To do that, we’ll run a small Python script that reads the label information that's stored in a CSV file, and move the files into the right folders. The script doesn't do any machine learning, it's just reading a spreadsheet file and moving files around. We'll get to the machine learning in a second.
-
-I'll run the script now.
-
-<RUN SCRIPT>
-
-Each of the animal noise recordings have now been placed in a folder that matches their label.
+I’ve moved each of the files so that they’re in a folder that matches their label.
 
 <OPEN CAT FOLDER>
 
-For example, if I open the ‘cat’ folder, all of the files are recordings of cat noises.
+If I open the ‘cat’ folder, all of the files are recordings of cat noises.
 
-Now that we've prepared our data for training, we're ready to create the model using Create ML. 
-
-Open Create ML by opening the Xcode menu, choosing Open Developer Tool, and choosing Create ML.
+Now that we've prepared our data for training, we're ready to create the model using Create ML. Open Create ML by opening the Xcode menu, choosing Open Developer Tool, and choosing Create ML.
 
 <OPEN CREATE ML>
 
@@ -216,3 +208,72 @@ And there we have it! Our animal noise detector app!
 
 SMALL FEATURES: AUTOMATIC CAPTION GENERATION
 
+Now that we’ve built an app around a single machine learning feature, let’s look at how we can use machine learning to improve a larger app. While it’s interesting to build a cool toy that shows off the power of CoreML, machine learning is at its best when it’s improving the user experience of an app.
+
+So, let’s improve an app using machine learning. I’m about to launch my amazing, brand new, and totally original social network site, called Birder. On Birder, users can post “chirps”, which are short messages. These messages can have images attached.
+
+It’s really important that my app be accessible to users with limited vision, so I’m designing Birder so that users can add captions that describe the images that they’re posting. This is important for screen readers, who will use the caption when reading the text to the user.
+
+I’ve already added the ability to take photos and add captions. If I launch the app and take a photo, I can type in a description of what’s in the photo.
+
+<LAUNCH APP, TAKE PHOTO>
+
+But it’s easy to just skip that step. I could make it mandatory, but it’s important to remember that the more steps you add increase friction. Another idea is to use machine learning to get us part of the way there. We can use CoreML to do object recognition on the photos that we add, and use that to create a starting point for our captions. This doesn’t mean that we’re absolving users of the need to add descriptive text, but it does reduce the amount of work.
+
+There are two common types of image analysis: object classification, and object detection. Object classification models attempt to classify the dominant object in an image, while object detection models attempt to identify multiple objects in an image. Classification models answer the question, “what object is this an image of?”, while detection models answer the question, “what’s in this image?”. It’s a subtle difference, but important. 
+
+Because we want to answer the question “what’s in this image”, we’ll use a classification model. A good one is YOLOv3Tiny. YOLO stands for “you only look once”, and it was developed by Joseph Redmon and Ali Farhadi . You give it an image, and it returns information about which regions of the image contain an object that it’s recognised, and possible identifiers for those objects. It’s called ‘tiny’ because it’s designed to be very small - the model is only 35MB, and less accurate ones are even smaller. 
+
+A pre-trained YOLOv3Tiny model is available for download from Apple’s CoreML models site. I’ll go ahead and download that now.
+
+Because we’re generating captions for our images, we don’t really care about where the objects are in the image, just what objects are in the image. This means that we’re being slightly inefficient with our use of this model, but it’s fine for this demo.
+
+Let’s get started in adding object detection to Birder. We’ll start by adding the downloaded YOLOv3Tiny model to the project.
+
+<DRAG MODEL INTO PROJECT>
+
+<OPEN PostChirpViewController.swift>
+
+In order to submit images to the model, we need to process them. The model is expecting a 416 by 416 square grid of colours, but the images that come off the camera will be bigger. They need to be scaled and cropped. Fortunately, iOS comes with a framework that takes care of this for us. It’s called Vision, and I’ve already imported it at the top of my code, along with CoreML.
+
+We deliver images to the model by creating a request. A request delivers the information to a model, and calls a completion handler when the model has finished processing. The request also has properties that let us set up how the image should be delivered, like how it should be scaled and cropped. Let’s add that now.
+
+<CODE: 1. Create observation request>
+
+The observation request uses a CoreML model class. In this case, we’ll use the YOLOv3Tiny class that Xcode generates for us. It also uses a completion handler, which is called when the request generates a result. For this app, the completion handler will call the processObservations method, which will use the results to generate and display the caption.
+
+Now that we’ve set up our request, we need to use it when the user takes a photo. My code has already been set up so that when an image is taken, it calls imageWasCaptured. At the moment, all it does is display a placeholder caption. To use this image with the request, we need to create a handler, and ask the handler to perform the request. 
+
+<CODE: 2. run request with handler>
+
+We’ll take the image, and use it to create a handler. We also need to get its orientation, because the handler uses that information to make sure that the image is sent to the model the right way up. Finally, you might notice that we’re doing all of this on a background dispatch queue, so that the user interface thread doesn’t get blocked while the model is working. When the request is complete, processObservations will be called.
+
+<CODE: 3. process observations>
+
+When process observations is called, it receives either an array of results, or an error. To use the results, we cast it to an array of VNRecognizedObjectObservation objects - this is a safe operation, because the model is guaranteed to only return results of this type - and then we can use the results to produce the caption.
+
+<CODE: 4. get labels for observations>
+
+Each result represents an object that the model detected in the image. The model can recognise 80 different categories of object, and for each result, we get the confidence for each category. What we want to do next is select the label that has the highest confidence. We also only want to use that label if we’re at least 80% confident in it. This means that if we take a photo, and none of the objects have a label with enough confidence, then we won’t generate a caption. It’s better to give no result than give a bad result.
+
+We’re all done! Let’s test it out.
+
+<LAUNCH APP, TAKE PHOTO>
+
+Now, when I take a photo of an object, it generates a caption for me.
+
+How to use machine learning well
+
+It’s important to remember that machine learning isn’t a shortcut, and it’s not a substitute for having a human being in the loop. When we generate our caption for Birder, we make sure that the user has a chance to edit, improve or remove it before it gets posted.
+
+Machine learning technologies are not really performing cognition. They’re generating automated results that don’t take into account any positive or negative impact on people. What they’re REALLY good at is getting you part of the way there, at very low cost and at scale.
+
+To see what I mean, let’s compare a human to a machine learning system, when it comes to image recognition problems. When it comes to speed, a human is slow, but a machine is fast. When it comes to cost, a human is expensive, but a machine is cheap. When it comes to scalability, hiring more humans is slow, but spinning up more machines is fast. So much for humanity.
+
+But it’s not all good news for the robot overlords. When it comes to bias, a human has lots, but a computer has MORE, due to it being a lot less flexible after training - decisions at training time are encoded, and it can only recognise classes that it was trained on -  far less than are available to a human. For quality, a human being is generally excellent, regardless of educational level, while a machine is OKAY on average. Finally, people are affected by the decisions that are made based on a result, while a machine isn’t. This fact alone means that purely AI-driven decisions are a terrible idea.
+
+Machine learning based solutions are at their best when they’re used to get a task part of the way there, and let a human be the final judge. In this talk, I hope I’ve given you a taste of what you can do with these technologies, and gotten you excited to apply them in your next app.
+
+You can follow me on Twitter at parisba, and I’d love to hear from you about what you think! 
+
+TBD PARIS: WHAT DOES POST-TALK Q&A LOOK LIKE?
